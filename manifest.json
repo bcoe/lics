@@ -1,0 +1,35 @@
+{
+  "name": "lics",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "scrape linked in.",
+  "background" : {
+    "scripts": ["./lib/background.js", "./lib/jquery.js", "./lib/jquery-ui.js"]
+  },
+  "page_action": {
+    "default_title": "lics"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": [
+    "http://127.0.0.1:8888/*",
+    "tabs",
+    "contextMenus",
+    "notifications"
+  ],
+  "content_scripts": [
+    {
+        "matches": ["http://*/*", "https://*/*"],
+        "js": [
+            "lib/jquery.js",
+            "lib/jquery-ui.js",
+            "lib/content.js"
+        ],
+        "css": ["css/content.css"],
+        "all_frames": false
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "lics",
+  "version": "1.0.0",
+  "description": "grab names title and company from search results.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcoe/lics.git"
+  },
+  "author": "Ben Coe <ben@npmjs.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bcoe/lics/issues"
+  },
+  "homepage": "https://github.com/bcoe/lics#readme",
+  "dependencies": {
+    "redis": "^2.4.2",
+    "restify": "^4.0.3"
+  }
+}
