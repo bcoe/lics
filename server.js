@@ -6,7 +6,7 @@ var server = restify.createServer()
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
-server.get('/', function (req, res) {
+server.get('/', function (req, res, done) {
 	if (req.params.people) {
 		client.rpush('people', req.params.people.map(function (p) { return JSON.stringify(p) }), function () {
 			console.log('wrote data to the redis \\o/')
@@ -14,6 +14,32 @@ server.get('/', function (req, res) {
 	}
 
 	res.send({success: 'woo!'}, 200)
+	return done()
+})
+
+server.get('/people', function (req, res) {
+	var body = ''
+
+	client.lrange('people', 0, -1, function (err, people) {
+			if (err) {
+
+			} else {
+				people = people.map(function (p) {
+					return JSON.parse(p)
+				})
+				people.unshift({name: 'Name', role: 'Role', company: 'Company'})
+				people.forEach(function (p) {
+					body += p.name + '\t' + p.role + '\t' + p.company + '\n'
+				})
+				res.writeHead(200, {
+				  'Content-Length': Buffer.byteLength(body),
+				  'Content-Type': 'text/csv'
+				});
+				res.write(body);
+				res.end();
+			}
+			return done()
+	})
 })
 
 server.listen(process.env.PORT, function() {
