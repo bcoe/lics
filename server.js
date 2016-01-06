@@ -29,6 +29,7 @@ server.get('/people', function (req, res) {
 				})
 				people.unshift({name: 'Name', role: 'Role', company: 'Company'})
 				people.forEach(function (p) {
+					if (p.name === 'LinkedIn Member') return
 					body += p.name + '\t' + p.role + '\t' + p.company + '\n'
 				})
 				res.writeHead(200, {
