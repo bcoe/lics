@@ -19,6 +19,7 @@ server.get('/', function (req, res, done) {
 
 server.get('/people', function (req, res) {
 	var body = ''
+	var dedupe = {}
 
 	client.lrange('people', 0, -1, function (err, people) {
 			if (err) {
@@ -30,6 +31,8 @@ server.get('/people', function (req, res) {
 				people.unshift({name: 'Name', role: 'Role', company: 'Company'})
 				people.forEach(function (p) {
 					if (p.name === 'LinkedIn Member') return
+					if (dedupe[p.name]) return
+					dedeupe[p.name] = true
 					body += p.name + '\t' + p.role + '\t' + p.company + '\n'
 				})
 				res.writeHead(200, {
