@@ -23,7 +23,7 @@ server.get('/people', function (req, res) {
 
 	client.lrange('people', 0, -1, function (err, people) {
 			if (err) {
-
+				res.send(500, err.message)
 			} else {
 				people = people.map(function (p) {
 					return JSON.parse(p)
@@ -32,7 +32,7 @@ server.get('/people', function (req, res) {
 				people.forEach(function (p) {
 					if (p.name === 'LinkedIn Member') return
 					if (dedupe[p.name]) return
-					dedeupe[p.name] = true
+					dedupe[p.name] = true
 					body += p.name + '\t' + p.role + '\t' + p.company + '\n'
 				})
 				res.writeHead(200, {
